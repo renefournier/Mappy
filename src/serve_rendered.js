@@ -331,7 +331,7 @@ module.exports = function(options, repo, params, id, dataResolver) {
       return res.status(400).send('Invalid center');
     }
     if (Math.min(width, height) <= 0 ||
-        Math.max(width, height) * scale > (options.maxSize || 2048) ||
+        Math.max(width, height) * scale > (options.maxSize || 8192) ||
         width != width || height != height) {
       return res.status(400).send('Invalid size');
     }

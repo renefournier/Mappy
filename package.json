@@ -1,5 +1,5 @@
 {
-  "name": "tileserver-gl",
+  "name": "mappy",
   "version": "2.1.0",
   "description": "Map tile server for JSON GL styles - vector and server side generated raster tiles",
   "main": "src/main.js",
@@ -40,7 +40,7 @@
     "proj4": "2.4.3",
     "request": "2.81.0",
     "sharp": "0.18.1",
-    "tileserver-gl-styles": "1.1.1"
+    "mappy-styles": "1.1.1"
   },
   "devDependencies": {
     "should": "^11.2.0",

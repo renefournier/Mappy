@@ -29,6 +29,7 @@ module.exports = function(options, repo, params, id, reportTiles, reportFont) {
         }
       }
       var identifier = reportTiles(mbtilesFile, fromData);
+      console.log ('vsd');
       source.url = 'local://data/' + identifier + '.json';
     }
   });
@@ -38,7 +39,17 @@ module.exports = function(options, repo, params, id, reportTiles, reportFont) {
       var fonts = (obj['layout'] || {})['text-font'];
       if (fonts && fonts.length) {
         fonts.forEach(reportFont);
+        console.log ('-->', fonts);
       } else {
+
+        console.log ('!!!');
+
+        // reportFont('Klokantech Noto Sans Regular');
+        reportFont('KlokanTechNotoSans Regular');
+        reportFont('Klokantech Noto Sans Bold');
+        // reportFont('KlokanTechNotoSans Bold');
+
+        reportFont('KlokanTech Noto Sans Regular');
         reportFont('Open Sans Regular');
         reportFont('Arial Unicode MS Regular');
       }
@@ -78,8 +89,21 @@ module.exports = function(options, repo, params, id, reportTiles, reportFont) {
       if (queryParams.length) {
         query = '?' + queryParams.join('&');
       }
-      return url.replace(
-          'local://', req.protocol + '://' + req.headers.host + '/') + query;
+
+      // return url.replace(
+      //     'local://', req.protocol + '://' + req.headers.host + '/') + query;
+
+      // THE FOLLOWING FIXES THE PROBLEM WHEN TERMINATING THE SSL CERT AHEAD OF THE SERVER (since Express sees req.protocol as http instead of https)
+
+      if (req.headers.host === 'maps.baseloc.com') {
+        var u = url.replace(
+            'local://', 'https' + '://' + req.headers.host + '/') + query;
+      } else {
+        var u = url.replace(
+            'local://', req.protocol + '://' + req.headers.host + '/') + query;
+      }
+      console.log (u);
+      return u;
     };
 
     var styleJSON_ = clone(styleJSON);

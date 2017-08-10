@@ -82,7 +82,7 @@ var getFontPbf = function(allowedFonts, fontPath, name, range, fallbacks) {
       delete fallbacks[name];
       fs.readFile(filename, function(err, data) {
         if (err) {
-          console.error('ERROR: Font not found:', name);
+          console.error('ERROR: Font not found:', name, filename);
           if (fallbacks && Object.keys(fallbacks).length) {
             var fallbackName = Object.keys(fallbacks)[0];
             console.error('ERROR: Trying to use', fallbackName, 'as a fallback');
