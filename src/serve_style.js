@@ -29,7 +29,7 @@ module.exports = function(options, repo, params, id, reportTiles, reportFont) {
         }
       }
       var identifier = reportTiles(mbtilesFile, fromData);
-      console.log ('vsd');
+      console.log ('----------------------------------------------------------');
       source.url = 'local://data/' + identifier + '.json';
     }
   });
@@ -39,7 +39,7 @@ module.exports = function(options, repo, params, id, reportTiles, reportFont) {
       var fonts = (obj['layout'] || {})['text-font'];
       if (fonts && fonts.length) {
         fonts.forEach(reportFont);
-        console.log ('-->', fonts);
+        console.log ('' + styleFile, "-->" , obj.id, fonts.join(" "));
       } else {
 
         console.log ('!!!');
@@ -95,14 +95,9 @@ module.exports = function(options, repo, params, id, reportTiles, reportFont) {
 
       // THE FOLLOWING FIXES THE PROBLEM WHEN TERMINATING THE SSL CERT AHEAD OF THE SERVER (since Express sees req.protocol as http instead of https)
 
-      if (req.headers.host === 'maps.baseloc.com') {
-        var u = url.replace(
-            'local://', 'https' + '://' + req.headers.host + '/') + query;
-      } else {
-        var u = url.replace(
-            'local://', req.protocol + '://' + req.headers.host + '/') + query;
-      }
-      console.log (u);
+      var protocol = (req.get('X-Forwarded-Proto') && req.get('X-Forwarded-Proto') === 'https') ? req.get('X-Forwarded-Proto') : req.protocol;
+      var u = url.replace('local://', protocol + '://' + req.headers.host + '/') + query;
+      console.log ('==>', u);
       return u;
     };
 
