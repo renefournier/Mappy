@@ -45,7 +45,7 @@ module.exports = function(options, repo, params, id, reportTiles, reportFont) {
         console.log ('!!!');
 
         // reportFont('Klokantech Noto Sans Regular');
-        reportFont('KlokanTechNotoSans Regular');
+        reportFont('KlokanTech Noto Sans Regular');
         reportFont('Klokantech Noto Sans Bold');
         // reportFont('KlokanTechNotoSans Bold');
 
@@ -94,6 +94,9 @@ module.exports = function(options, repo, params, id, reportTiles, reportFont) {
       //     'local://', req.protocol + '://' + req.headers.host + '/') + query;
 
       // THE FOLLOWING FIXES THE PROBLEM WHEN TERMINATING THE SSL CERT AHEAD OF THE SERVER (since Express sees req.protocol as http instead of https)
+
+      console.log ('x', req.get('X-Forwarded-Proto'));
+      console.log ('p', req.protocol);
 
       var protocol = (req.get('X-Forwarded-Proto') && req.get('X-Forwarded-Proto') === 'https') ? req.get('X-Forwarded-Proto') : req.protocol;
       var u = url.replace('local://', protocol + '://' + req.headers.host + '/') + query;
